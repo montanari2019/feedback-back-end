@@ -20,31 +20,18 @@ routes.post("/feedbacks", async (req, res) => {
     const prismaFeedbacksRepository = new PrismaFeedbacksRepository()
     const nodemailerMailAdapter = new NodemailerMailAdapter()
 
-    
+
     const submitFeedbackUseCase = new SubmitFeedbackUseCase(
         prismaFeedbacksRepository,
         nodemailerMailAdapter
     ); 
 
-
+    // Criando o feedback
     await submitFeedbackUseCase.execute({
         type,
         comment,
         screenshot
     })
-
-    // await transport.sendMail({
-    //     from: 'Equipe Feedget <oi@feedget.com>',
-    //     to: 'Ikaro Montanari <ikaro.montanari@hotmail.com>',
-    //     subject: 'Novo Feedback',
-    //     html: [
-    //         `<div style="font-family: sans-serif; font-size: 16px; color: #111">`,
-    //         `<h1>Tipo do feedback: ${type}</h1>`,
-    //         `<p>Comentário: ${comment}</p>`,
-    //         `</div>` 
-
-    //     ].join('\n')
-    // })
 
     return res.status(201).send()
 })
